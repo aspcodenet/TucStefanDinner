@@ -1,13 +1,32 @@
 ﻿public class Person : IGameObject
 {
-    public static Random Random = new Random();
+    private int counter = 0;
+    private string latestAction = "";
+
+    public static Random Random = new();
     public string Namn { get; set; }
+
+    public int Level { get; private set; } = 1;
 
     public void Act()
     {
         var items = new[] { "rapar", "äter", "dricker", "pratar" };
-        var latestAction = items[Random.Next(items.Length)];
-        Console.WriteLine($"{Namn} {latestAction}");
+        latestAction = items[Random.Next(items.Length)];
+        Console.WriteLine($"Level {Level} {Namn} {latestAction}");
+    }
+
+    public void CheckIfLevelUp()
+    {
+        if (latestAction == "rapar") 
+            counter++;
+        else
+            counter = 0;
+
+        if (counter == 3)
+        {
+            Level++;
+            counter = 0;
+        }
     }
 }
 
